@@ -1,65 +1,65 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": 0,
-   "metadata": {
-    "application/vnd.databricks.v1+cell": {
-     "cellMetadata": {},
-     "inputWidgets": {},
-     "nuid": "2b83ac6b-dcdb-4486-aed9-45263081863c",
-     "showTitle": false,
-     "tableResultSettingsMap": {},
-     "title": ""
-    }
-   },
-   "outputs": [],
-   "source": [
-    "# Week 3 NYC Taxi ETL Pipeline – Comparative Project\n",
-    "\n",
-    "## \uD83D\uDCCC Project Overview\n",
-    "\n",
-    "This project delivers a complete data engineering solution for the NYC Yellow Taxi dataset using both:\n",
-    "- **Imperative ETL with Databricks Workflows**\n",
-    "- **Declarative ETL with Delta Live Tables (DLT)**\n",
-    "\n",
-    "It also includes **Unity Catalog governance**, quality enforcement, and a **comparative technical report** to guide best-practice adoption for InnovateRetail.\n",
-    "\n",
-    "---\n",
-    "\n",
-    "## \uD83D\uDDC2 Directory Structure\n",
-    "\n",
-    ".\n",
-    "├── notebooks_workflow/\n",
-    "│ ├── 01_workflow_ingest_to_bronze.py\n",
-    "│ ├── 02_workflow_transform_to_silver.py\n",
-    "│ ├── 03_workflow_aggregate_to_gold.py\n",
-    "│\n",
-    "├── dlt_pipeline/\n",
-    "│ └── dlt_pipeline.py\n",
-    "│\n",
-    "├── setup/\n",
-    "│ └── data_staging_notebook.py (used to simulate file ingestion via dbutils.fs.cp)\n",
-    "│\n",
-    "├── documentation/\n",
-    "│ ├── W2_NYCTaxi_ETL_Report.md\n",
-    "│ ├── W3_Comparative_ETL_Technical_Report_Clean.pdf\n",
-    "│ ├── W3_Comparative_ETL_Technical_Report_Clean.md\n",
-    "│ └── pipeline_architecture.png (imperative & DLT diagrams)\n",
-    "│\n",
-    "└── README.md\n",
-    "\n",
-    "\n",
-    "---\n",
-    "\n",
-    "## \uD83D\uDD27 Setup & Configuration\n",
-    "\n",
-    "### Unity Catalog Setup\n",
-    "\n",
-    "- **Metastore**: `my-meta-store`\n",
-    "- **Region**: `eastus`\n",
-    "- **Catalog**: `innovateretail_dev`\n",
-    "- **Schema**: `nyc_taxi_pipeline`\n",
+# Week 3 NYC Taxi ETL Pipeline – Comparative Project
+
+## 📌 Project Overview
+
+This project delivers a complete data engineering solution for the NYC Yellow Taxi dataset using both:
+
+- **Imperative ETL with Databricks Workflows**
+- **Declarative ETL with Delta Live Tables (DLT)**
+
+It also includes **Unity Catalog governance**, quality enforcement, and a **comparative technical report** to guide best-practice adoption for InnovateRetail.
+
+---
+
+## 🗂️ Directory Structure
+
+```
+.
+├── notebooks_workflow/
+│   ├── 01_workflow_ingest_to_bronze.py
+│   ├── 02_workflow_transform_to_silver.py
+│   ├── 03_workflow_aggregate_to_gold.py
+│
+├── dlt_pipeline/
+│   └── dlt_pipeline.py
+│
+├── setup/
+│   └── data_staging_notebook.py   # Simulates file ingestion via dbutils.fs.cp
+│
+├── documentation/
+│   ├── W2_NYCTaxi_ETL_Report.md
+│   ├── W3_Comparative_ETL_Technical_Report_Clean.pdf
+│   ├── W3_Comparative_ETL_Technical_Report_Clean.md
+│   └── pipeline_architecture.png  # Imperative & DLT diagrams
+│
+└── README.md
+```
+
+---
+
+## 🛠️ Setup & Configuration
+
+### Unity Catalog Setup
+
+- **Metastore**: `my-meta-store`
+- **Region**: `eastus`
+- **Catalog**: `innovateretail_dev`
+- **Schema**: `nyc_taxi_pipeline`
+- **Tables**:
+    - `bronze_nyc_taxi`
+    - `silver_nyc_taxi_clean`
+    - `silver_nyc_taxi_quarantined`
+    - `gold_daily_location`
+    - `gold_payment_analysis`
+
+> Tables are fully governed and lineage-tracked via Unity Catalog.
+
+---
+
+## 🔁 Imperative ETL Pipeline (Databricks Workflows)
+
+- **Bronze Notebook**: Ingests raw Parquet and appends to `bronze_nyc_taxi`
+- **Silver Notebook**: Transforms and enforces manual DQ using `assert` statements, then MERGEs into Silver
     "- **Tables**:\n",
     "  - `bronze_nyc_taxi`\n",
     "  - `silver_nyc_taxi_clean`\n",
